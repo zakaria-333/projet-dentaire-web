@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tailwind CSS Example</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-gray-50 dark:bg-slate-900">
+    <!-- Sidebar -->
+    <div
+      id="application-sidebar"
+      th:fragment="body"
+      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div
+        class="flex items-center justify-center dark:bg-gray-800 h-20 rounded-t-lg"
+      >
+        <div class="relative flex items-center">
+          <a th:href="@{'data:image/jpeg;base64,' + ${profImage}}" download>
+            <img
+              th:if="${profImage != null}"
+              th:src="@{'data:image/jpeg;base64,' + ${profImage}}"
+              alt="Admin Image"
+              class="rounded-full h-12 w-12 object-cover"
+            />
+          </a>
+          <img
+            th:unless="${profImage != null}"
+            th:src="@{/images/person.png}"
+            alt="Default Image"
+            class="rounded-full h-12 w-12 object-cover"
+          />
+
+          <span
+            class="absolute bottom-0 right-0 block h-3 w-3 border-2 border-white bg-green-500 rounded-full"
+          ></span>
+        </div>
+
+        <div class="ml-3">
+          <span class="block text-sm font-medium text-black">
+            <span class="block text-sm font-medium text-black">
+              <span
+                th:if="${authenticatedProf != null}"
+                th:text="Pr."
+                class="dark:text-white"
+              ></span>
+              <span
+                th:if="${authenticatedProf != null}"
+                th:text="${authenticatedProf.firstName}"
+                class="dark:text-white"
+              ></span>
+              <span
+                th:if="${authenticatedProf != null}"
+                th:text="${authenticatedProf.lastName}"
+                class="dark:text-white"
+              ></span>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <nav
+        class="hs-accordion-group p-6 w-full flex flex-col flex-wrap"
+        data-hs-accordion-always-open
+      >
+        <ul class="space-y-1.5">
+          <li>
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 dark:hover:text-black"
+            >
+              <svg
+                class="flex-shrink-0 w-4 h-4"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+              Dashboard
+            </a>
+          </li>
+
+          <!-- Gestion des étudiants -->
+          <li class="dark:hover:text-black">
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 dark:hover:text-black"
+              th:href="@{/prof/student}"
+            >
+              <!-- SVG icon with additional classes for styling -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913z"
+                />
+                <path
+                  d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46l-3.892-1.556Z"
+                />
+              </svg>
+
+              <!-- Contenu du lien pour la gestion des étudiants -->
+              Gestion des étudiants
+            </a>
+          </li>
+
+          <!-- Gestion des groupes -->
+          <li>
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 dark:hover:text-black"
+              th:href="@{/prof/groupe}"
+            >
+              <svg
+                class="w-[16px] h-[16px]"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 19"
+              >
+                <path
+                  d="M14.5 0A3.987 3.987 0 0 0 11 2.1a4.977 4.977 0 0 1 3.9 5.858A3.989 3.989 0 0 0 14.5 0ZM9 13h2a4 4 0 0 1 4 4v2H5v-2a4 4 0 0 1 4-4Z"
+                />
+                <path
+                  d="M5 19h10v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2ZM5 7a5.008 5.008 0 0 1 4-4.9 3.988 3.988 0 1 0-3.9 5.859A4.974 4.974 0 0 1 5 7Zm5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm5-1h-.424a5.016 5.016 0 0 1-1.942 2.232A6.007 6.007 0 0 1 17 17h2a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5ZM5.424 9H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h2a6.007 6.007 0 0 1 4.366-5.768A5.016 5.016 0 0 1 5.424 9Z"
+                />
+              </svg>
+              <!-- Contenu du lien pour la gestion des groupes -->
+              Gestion des groupes
+            </a>
+          </li>
+
+          <!-- Gestion des dents -->
+          <li>
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 dark:hover:text-black"
+              th:href="@{/prof/tooth}"
+            >
+              <!-- Contenu du lien pour la gestion des dents -->
+              Gestion des dents
+            </a>
+          </li>
+
+          <!-- Gestion des TPs -->
+          <li>
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 dark:hover:text-black"
+              th:href="@{/prof/pw}"
+            >
+              <svg
+                class="w-[16px] h-[16px]"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 18 18"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.7"
+                  d="M1 5v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H1Zm0 0V2a1 1 0 0 1 1-1h5.443a1 1 0 0 1 .8.4l2.7 3.6H1Z"
+                />
+              </svg>
+              <!-- Contenu du lien pour la gestion des TPs -->
+              Gestion des TPs
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 dark:hover:text-black"
+              th:href="@{/prof/profil}"
+            >
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 16"
+                class="w-[16px] h-[16px]"
+              >
+                <path
+                  d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z"
+                />
+              </svg>
+              <!-- Contenu du lien pour la modification du profil -->
+              Modification du profil
+            </a>
+          </li>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+
+          <li>
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 dark:hover:text-white dark:hover:bg-red-900"
+              th:href="@{/logout}"
+            >
+              <svg
+                class="w-4 h-4"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M13 2L20 9 13 16M20 9H2" />
+              </svg>
+              Deconnexion
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
+</html>

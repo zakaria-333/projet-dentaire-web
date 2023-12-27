@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+    />
+  </head>
+
+  <body
+    class="font-[Poppins] flex w-full justify-center items-center bg-sky-100 mt-10"
+  >
+    <th:block th:include="sidebar :: body"></th:block>
+    <div
+      th:switch="${pws}"
+      class="ml-64 relative flex flex-col w-10/12 p-5 m-10 justify-center items-center"
+    >
+      <a
+        href="/prof/pw/add"
+        class="absolute top-1 left-5 px-2 py-1 rounded font-semibold text-blue-800 bg-indigo-300 hover:bg-blue-500"
+      >
+        <i class="bi bi-plus-circle mr-2 text-lg"></i>Add new
+      </a>
+      <h2 th:case="null" class="text-xl font-semibold my-4">
+        No Data To Display!
+      </h2>
+      <div th:case="*" class="w-full text-center">
+        <h2
+          class="text-2xl font-semibold my-8 w-full py-2 bg-blue-200 rounded-lg text-blue-800 shadow-2xl"
+        >
+          List des TPs
+        </h2>
+        <div class="grid grid-cols-4 gap-10 w-full">
+          <div
+            th:each="pw ,stat: ${pws} "
+            class="relative w-full justify-center items-center flex flex-col bg-blue-200 rounded-lg shadow-2xl p-3"
+          >
+            <span class="text-center mb-3">
+              <p
+                th:text="${pw.title}"
+                class="font-semibold text-lg text-blue-800"
+              ></p>
+              <p th:text="${pw.objectif}" class="text-sm text-gray-400"></p>
+              <a
+                th:if="${encodedDocs != null && stat != null && encodedDocs[stat.index] != null && encodedDocs[stat.index] != ''}"
+                th:href="'data:application/octet-stream;base64,' + ${encodedDocs[stat.index]}"
+                th:download="'Document_PW_' + ${pw.title} + '.pdf'"
+                title="Télécharger le document"
+                class="flex items-center dark:text-blue-700 dark:hover:text-blue-900 transition duration-300"
+              >
+                <!-- Document download icon -->
+                <svg
+                  class="w-6 h-6 mr-1.5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 16 18"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"
+                  />
+                </svg>
+                Télécharger le document du PW
+              </a>
+
+              <p th:text="${pw.tooth.name}" class="text-sm text-gray-400"></p>
+            </span>
+
+            <a
+              href="#"
+              th:onclick="'javascript:showDeleteConfirmation(\'' + ${pw.id} + '\')'"
+            >
+              <i
+                class="bi bi-trash-fill absolute bottom-1 right-2 text-lg text-rose-900 hover:text-rose-600 hover:scale-125"
+              ></i>
+            </a>
+
+            <a th:href="@{/prof/pw/edit/{id}(id=${pw.id})}">
+              <i
+                class="bi bi-pencil-square absolute top-1 right-2 text-lg text-blue-600 hover:text-blue-700 hover:scale-125"
+              ></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div
+        th:if="${mode eq 'add' or mode eq 'update'} "
+        class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 backdrop-blur-sm"
+      >
+        <div
+          class="relative h-3/5 w-1/4 bg-blue-200 border-4 border-violet-700 rounded-lg flex items-center justify-center shadow-xl border border-gray-300"
+        >
+          <form
+            th:action="${mode eq 'add' ? '/prof/pw/addpw' : '/prof/pw/update/' + pw.id}"
+            th:object="${pw}"
+            method="post"
+            enctype="multipart/form-data"
+            class="w-full flex flex-col items-center justify-center"
+          >
+            <input type="text" hidden="hidden" th:field="*{id}" />
+            <span th:switch="${mode}" class="text-violet-600">
+              <p th:case="'add'" class="text-xl font-semibold mb-4">Add pw</p>
+              <p th:case="'update'" class="text-xl font-semibold mb-4">
+                Update pw
+              </p>
+            </span>
+
+            <div class="mb-4 px-10">
+              <label
+                for="title"
+                class="block text-sm font-medium text-gray-500 font-semibold"
+                >Title:</label
+              >
+              <input
+                id="title"
+                th:field="*{title}"
+                type="text"
+                placeholder="Enter your title"
+                class="rounded text-sm py-2 px-10 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700"
+              />
+            </div>
+            <div class="mb-4 px-10">
+              <label
+                for="objectif"
+                class="block text-sm font-medium text-gray-500 font-semibold"
+                >Objectif:</label
+              >
+              <input
+                id="objectif"
+                th:field="*{objectif}"
+                type="text"
+                placeholder="Enter your objectif"
+                class="rounded text-sm py-2 px-10 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700"
+              />
+            </div>
+            <div class="mb-4">
+              <label
+                for="doc"
+                class="block text-sm font-medium text-gray-500 font-semibold"
+                >Document:</label
+              >
+              <input
+                id="doc"
+                name="docFile"
+                type="file"
+                accept=".pdf"
+                class="text-sm py-2 px-1 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700"
+              />
+            </div>
+
+            <div class="mb-4 px-10">
+              <label
+                for="tooth"
+                class="block text-sm font-medium text-gray-500 font-semibold"
+                >Tooths:</label
+              >
+              <select
+                id="tooth"
+                th:field="*{tooth.id}"
+                class="rounded text-sm py-2 px-10 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700"
+              >
+                <option value="">Choose your tooth</option>
+                <!-- Loop through tooths to create options -->
+                <option
+                  th:each="tooth : ${tooths}"
+                  th:value="${tooth.id}"
+                  th:text="${tooth.name}"
+                ></option>
+              </select>
+            </div>
+            <div class="mb-4 px-10">
+              <input
+                type="hidden"
+                name="professor.id"
+                th:value="${authenticatedProf.id}"
+              />
+            </div>
+            <span>
+              <button
+                type="submit"
+                class="bg-indigo-50 text-yellow-700 font-medium px-4 py-1.5 rounded-md hover:bg-indigo-400"
+              >
+                Submit
+              </button>
+              <a href="/prof/pw" class="absolute top-2 right-2 text-yellow-600">
+                <i class="bi bi-x-lg"></i>
+              </a>
+            </span>
+          </form>
+        </div>
+      </div>
+
+      <div
+        id="deleteConfirmation"
+        class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 backdrop-blur-sm hidden"
+      >
+        <div
+          class="relative h-1/5 w-1/4 bg-blue-200 border-4 border-violet-700 rounded-lg flex items-center justify-center shadow-xl border border-gray-300"
+        >
+          <form
+            id="deleteForm"
+            th:action="@{/prof/tooth/delete/}"
+            method="get"
+            class="w-full flex flex-col items-center justify-center"
+          >
+            <input type="hidden" id="deleteId" name="id" />
+            <span class="text-violet-600">
+              <p class="text-xl font-semibold mb-4">
+                Are you sure you want to delete?
+              </p>
+            </span>
+            <span>
+              <button
+                type="submit"
+                class="bg-rose-200 text-rose-700 font-medium px-4 py-1.5 rounded-md hover:bg-rose-400 mr-4"
+              >
+                Delete
+              </button>
+              <button
+                type="button"
+                onclick="cancelDelete()"
+                class="bg-yellow-200 text-yellow-700 font-medium px-4 py-1.5 rounded-md hover:bg-yellow-400 ml-4"
+              >
+                Cancel
+              </button>
+            </span>
+          </form>
+        </div>
+      </div>
+
+      <script th:inline="javascript">
+        function showDeleteConfirmation(id) {
+          var deleteConfirmation =
+            document.getElementById("deleteConfirmation");
+          deleteConfirmation.classList.remove("hidden");
+          var deleteIdField = document.getElementById("deleteId");
+          deleteIdField.value = id;
+          document.getElementById("deleteForm").action =
+            "/prof/pw/delete/" + id;
+        }
+
+        function cancelDelete() {
+          var deleteConfirmation =
+            document.getElementById("deleteConfirmation");
+          deleteConfirmation.classList.add("hidden");
+        }
+      </script>
+    </div>
+  </body>
+</html>

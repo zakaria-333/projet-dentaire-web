@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+    />
+  </head>
+</style>
+  <body
+    class="font-[Poppins] flex w-full justify-center items-center bg-sky-100 mt-10"
+  >
+    <div
+      id="docs-sidebar"
+      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <nav
+        class="hs-accordion-group p-6 w-full flex flex-col flex-wrap"
+        data-hs-accordion-always-open
+      >
+        <div
+          class="flex items-center justify-center dark:bg-gray-800 h-20 rounded-t-lg"
+        >
+          <div class="relative flex items-center">
+            <img
+              th:src="@{'data:image/jpeg;base64,' + ${adminImage}}"
+              alt="Admin Image"
+              class="rounded-full h-12 w-12 object-cover"
+            />
+
+            <span
+              class="absolute bottom-0 right-0 block h-3 w-3 border-2 border-white bg-green-500 rounded-full"
+            ></span>
+          </div>
+
+          <div class="ml-3">
+            <span class="block text-sm font-medium text-black">
+              <span class="block text-sm font-medium text-black">
+                <span th:if="${authenticatedAdmin != null}" th:text="${authenticatedAdmin.userName}"class="dark:text-white"></span>
+                <span th:if="${authenticatedAdmin != null}" th:text="${authenticatedAdmin.lastName}"
+                class="dark:text-white"></span>
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <ul class="space-y-1.5">
+          <li>
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 dark:hover:text-black"
+              href="#"
+            >
+              <svg
+                class="w-4 h-4"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <li>
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 dark:hover:text-white dark:hover:bg-red-900"
+              th:href="@{/logout}"
+            >
+              <svg
+                class="w-4 h-4"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M13 2L20 9 13 16M20 9H2" />
+              </svg>
+              Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div
+      th:switch="${professors}"
+      class="ml-64 relative flex flex-col w-11/12 p-5 m-10 justify-center items-center"
+    >
+      <a
+        th:href="@{/admin/professor/add}"
+        class="absolute top-1 left-5 px-2 py-1 rounded font-semibold text-blue-800 bg-indigo-300 hover:bg-blue-500"
+      >
+        <i class="bi bi-plus-circle mr-2 text-lg"></i>Add new
+      </a>
+      <h2 th:case="null" class="text-xl font-semibold my-4">
+        No Data To Display!
+      </h2>
+      <div th:case="*" class="w-full text-center">
+        <h2
+          class="text-2xl font-semibold my-8 w-full py-2 bg-blue-200 rounded-lg text-blue-800 shadow-2xl"
+        >
+          Getion des professeurs
+        </h2>
+        <div class="grid grid-cols-4 gap-10 w-full">
+          <div
+            th:each="professor, stat : ${professors}"
+            class="relative w-full justify-center items-center flex flex-col bg-blue-200 rounded-lg shadow-2xl p-3 hover:cursor-pointer"
+          >
+            <div class="px-2 pt-2 pb-2 mb-2 w-1/3 " style="height: 50%">
+              <img
+                th:if="${encodedPhotos != null && stat != null && encodedPhotos[stat.index] != null && encodedPhotos[stat.index] != ''}"
+                th:src="'data:image/jpeg;base64,' + ${encodedPhotos[stat.index]}"
+                alt="Professor Photo"
+                style="max-height: 100%; width: auto; border-radius: 30%"
+              />
+            </div>
+            <span class="text-center mb-3">
+              <p
+                th:text="${professor.userName}"
+                class="font-semibold text-lg text-blue-800"
+              ></p>
+              <p
+                th:text="${professor.firstName}"
+                class="text-sm text-gray-400"
+              ></p>
+              <p
+                th:text="${professor.lastName}"
+                class="text-sm text-gray-400"
+              ></p>
+              <p th:text="${professor.grade}" class="text-sm text-gray-400"></p>
+              <p th:text="${professor.email}" class="text-sm text-gray-400"></p>
+            </span>
+
+            <a
+              href="#"
+              th:onclick="'javascript:showDeleteConfirmation(\'' + ${professor.id} + '\')'"
+            >
+              <i
+                class="bi bi-trash-fill absolute bottom-1 right-2 text-lg text-rose-900 hover:text-rose-600 hover:scale-125"
+              ></i>
+            </a>
+
+            <a th:href="@{/admin/professor/edit/{id}(id=${professor.id})}">
+              <i
+                class="bi bi-pencil-square absolute top-1 right-2 text-lg text-blue-600 hover:text-blue-700 hover:scale-125"
+              ></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div
+        th:if="${mode eq 'add' or mode eq 'update'} "
+        class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 backdrop-blur-sm"
+      >
+        <div
+          class="relative h-11/12 py-6 w-1/4 bg-blue-200 border-4 border-violet-700 rounded-lg flex items-center justify-center shadow-xl border border-gray-300"
+        >
+          <form
+            th:action="${mode eq 'add' ? '/admin/professor/addprofessor' : '/admin/professor/update/' + professor.id}"
+            th:object="${professor}"
+            method="post"
+            enctype="multipart/form-data"
+            class="w-full flex flex-col items-center justify-center"
+          >
+            <input type="text" hidden="hidden" th:field="*{id}" />
+
+            <span th:switch="${mode}" class="text-violet-600">
+              <p th:case="'add'" class="text-xl font-semibold mb-4">
+                Add professor
+              </p>
+              <p th:case="'update'" class="text-xl font-semibold mb-4">
+                Update professor
+              </p>
+            </span>
+            <span class="px-2 pt-2 pb-2 mb-2 w-1/3" style="height: 20%">
+              <img
+                th:if="${encodedPhoto != null}"
+                th:src="'data:image/jpeg;base64,' + ${encodedPhoto}"
+                alt="Professor Photo"
+                style="max-height: 100%; width: auto; border-radius: 40%"
+              />
+            </span>
+            <div class="mb-4 px-10">
+              <label for="photo" class="block text-sm font-medium text-gray-500 font-semibold">Photo:</label>
+              <input id="photo" name="photoFile" type="file" accept="image/*" class="text-sm py-2 px-4 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700" />
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="username"
+                class="block text-sm font-medium text-gray-500 font-semibold"
+                >Username:</label
+              >
+              <input
+                id="username"
+                th:field="*{userName}"
+                type="text"
+                placeholder="Enter your username"
+                class="rounded text-sm py-2 px-10 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700"
+              />
+              
+              <input
+                id="password"
+                th:field="*{password}"
+                type="text"
+                hidden
+                class="rounded text-sm py-2 px-10 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700"
+              />
+            </div>
+            <div class="mb-4 px-10">
+              <label
+                for="firstName"
+                class="block text-sm font-medium text-gray-500 font-semibold"
+                >First name:</label
+              >
+              <input
+                id="firstName"
+                th:field="*{firstName}"
+                type="text"
+                placeholder="Enter your first name"
+                class="rounded text-sm py-2 px-10 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700"
+              />
+            </div>
+            <div class="mb-4 px-10">
+              <label
+                for="lastName"
+                class="block text-sm font-medium text-gray-500 font-semibold"
+                >Last name:</label
+              >
+              <input
+                id="lastName"
+                th:field="*{lastName}"
+                type="text"
+                placeholder="Enter your last name"
+                class="rounded text-sm py-2 px-10 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700"
+              />
+            </div>
+
+            <div class="mb-4 px-10">
+              <label
+                for="Email"
+                class="block text-sm font-medium text-gray-500 font-semibold"
+                >Email:</label
+              >
+              <input
+                id="email"
+                th:field="*{email}"
+                type="text"
+                placeholder="Enter your email"
+                class="rounded text-sm py-2 px-10 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700"
+              />
+            </div>
+            <div class="mb-4 px-10">
+              <label
+                for="grade"
+                class="block text-sm font-medium text-gray-500 font-semibold"
+                >Grade:</label
+              >
+              <input
+                id="grade"
+                th:field="*{grade}"
+                type="text"
+                placeholder="Enter your grade"
+                class="rounded text-sm py-2 px-10 my-2 bg-violet-100 border text-violet-700 border-violet-500 focus:outline-none focus:ring focus:border-violet-700"
+              />
+            </div>
+            <span>
+              <button
+                type="submit"
+                class="bg-indigo-50 text-yellow-700 font-medium px-4 py-1.5 rounded-md hover:bg-indigo-400"
+              >
+                Submit
+              </button>
+              <a
+                href="/admin/professor"
+                class="absolute top-2 right-2 text-yellow-600"
+              >
+                <i class="bi bi-x-lg"></i>
+              </a>
+            </span>
+          </form>
+        </div>
+      </div>
+
+      <div
+        id="deleteConfirmation"
+        class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 backdrop-blur-sm hidden"
+      >
+        <div
+          class="relative h-1/5 w-1/4 bg-blue-200 border-4 border-violet-700 rounded-lg flex items-center justify-center shadow-xl border border-gray-300"
+        >
+          <form
+            id="deleteForm"
+            th:action="@{/admin/professor/delete/}"
+            method="get"
+            class="w-full flex flex-col items-center justify-center"
+          >
+            <input type="hidden" id="deleteId" name="id" />
+            <span class="text-violet-600">
+              <p class="text-xl font-semibold mb-4">
+                Are you sure you want to delete?
+              </p>
+            </span>
+            <span>
+              <button
+                type="submit"
+                class="bg-rose-200 text-rose-700 font-medium px-4 py-1.5 rounded-md hover:bg-rose-400 mr-4"
+              >
+                Delete
+              </button>
+              <button
+                type="button"
+                onclick="cancelDelete()"
+                class="bg-yellow-200 text-yellow-700 font-medium px-4 py-1.5 rounded-md hover:bg-yellow-400 ml-4"
+              >
+                Cancel
+              </button>
+            </span>
+          </form>
+        </div>
+      </div>
+
+      <script th:inline="javascript">
+        function showDeleteConfirmation(id) {
+          var deleteConfirmation =
+            document.getElementById("deleteConfirmation");
+          deleteConfirmation.classList.remove("hidden");
+          var deleteIdField = document.getElementById("deleteId");
+          deleteIdField.value = id;
+          document.getElementById("deleteForm").action =
+            "/admin/professor/delete/" + id;
+        }
+
+        function cancelDelete() {
+          var deleteConfirmation =
+            document.getElementById("deleteConfirmation");
+          deleteConfirmation.classList.add("hidden");
+        }
+      </script>
+    </div>
+  </body>
+</html>
