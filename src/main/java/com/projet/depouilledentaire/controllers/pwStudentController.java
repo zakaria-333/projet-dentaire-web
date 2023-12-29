@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.projet.depouilledentaire.entities.Student;
+
 import com.projet.depouilledentaire.entities.StudentPW;
 import com.projet.depouilledentaire.entities.StudentPWKey;
 import com.projet.depouilledentaire.entities.User;
@@ -42,11 +42,17 @@ public class pwStudentController {
     model.addAttribute("student", studentRepository.getById(idStudent));
     List<StudentPW> pws = studentPWRepository.findByStudent(studentRepository.getById(idStudent));
     List<String> encodedPhotos = new ArrayList<>();
+    List<String> titles = new ArrayList<>();
+    List<Double> notes = new ArrayList<>();
     for (StudentPW pw : pws) {
       encodedPhotos.add(encodePhoto(pw.getImageFront()));
+      titles.add(pw.getPw().getTitle());
+      notes.add(pw.getNote());
     }
     model.addAttribute("pws", pws);
     model.addAttribute("encodedPhotos", encodedPhotos);
+    model.addAttribute("tps", titles);
+    model.addAttribute("notes", notes);
     return "pwStudent";
   }
 
@@ -62,3 +68,16 @@ public class pwStudentController {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
