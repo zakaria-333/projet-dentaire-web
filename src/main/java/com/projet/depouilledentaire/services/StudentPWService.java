@@ -13,8 +13,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,24 +84,6 @@ public class StudentPWService implements IDao<StudentPW> {
         return null;
     }
 
-    public StudentPW createRelationByIDs(Long studentId, Long pwId) {
-        // Récupérer le Student et le PW à partir de leurs identifiants respectifs
-        Optional<Student> studentOptional = studentRepository.findById(studentId);
-        Optional<PW> pwOptional = pwRepository.findById(pwId);
-
-        // Vérifier si le Student et le PW existent
-        if (studentOptional.isPresent() && pwOptional.isPresent()) {
-            Student student = studentOptional.get();
-            PW pw = pwOptional.get();
-
-            // Créer une nouvelle entité StudentPW et l'associer au Student et au PW
-            StudentPW studentPW = new StudentPW(student, pw, "timeValue", new Date(), null, null, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-            studentPWRepository.save(studentPW);
-            return studentPW;
-        } else {
-            throw new IllegalArgumentException("Student ou PW non trouvé !");
-        }
-    }
 
     public StudentPW findById(StudentPWKey id) {
         Optional<StudentPW> optionalStudentPW = studentPWRepository.findById(id);

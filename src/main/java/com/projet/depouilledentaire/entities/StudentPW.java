@@ -38,16 +38,27 @@ public class StudentPW {
     @Column(name = "imageSide", columnDefinition = "LONGBLOB")
     private byte[] imageSide;
 
-    private Date date;
-    private double note;
-    private String angles;
     private double af1;
     private double af2;
     private double bf1;
     private double bf2;
     private double cf1;
     private double cf2;
-    private double cvf2;
+
+
+    private double as1;
+    private double as2;
+    private double bs1;
+    private double bs2;
+    private double cs1;
+    private double cs2;
+
+    private Date date;
+
+    private double convergence;
+    private String isSymetrical;
+    private double note;
+    public String remarque;
 
     public StudentPW(Student student, PW pw, String time, byte[] imageFront, byte[] imageSide, Date date) {
         StudentPWKey id = new StudentPWKey(student.getId(), pw.getId());
@@ -59,22 +70,5 @@ public class StudentPW {
     }
 
 
-    public StudentPW(Student student, PW pw, String time, Date date, byte[] imageFront, byte[] imageSide, double af1, double af2, double bf1, double bf2, double cf1, double cf2, double cvf2, double note) {
-        StudentPWKey id = new StudentPWKey(student.getId(),pw.getId());
-        this.id = id;
-        this.pw = pw;
-        this.time = time;
-        this.date = date;
-        this.imageFront = imageFront;
-        this.imageSide = imageSide;
-        this.af1 = af1;
-        this.af2 = af2;
-        this.bf1 = bf1;
-        this.bf2 = bf2;
-        this.cf1 = cf1;
-        this.cf2 = cf2;
-        this.cvf2 = cvf2;
-        this.note = note;
-    }
 
 }

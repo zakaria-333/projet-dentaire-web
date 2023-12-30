@@ -58,7 +58,7 @@
           class="relative w-full justify-center items-center flex flex-col bg-blue-200 rounded-lg shadow-2xl p-3 cursor-pointer mb-4"
         >
           <div class="flex items-center">
-            <!-- Texte à gauche -->
+            <!-- Contenu textuel -->
             <div class="text-center mr-4">
               <!-- Titre affiché comme h1 centré -->
               <h1
@@ -66,74 +66,7 @@
                 class="text-2xl font-bold text-gray-800 mb-2"
               ></h1>
               <p th:text="${pwa.date}" class="text-md text-gray-600"></p>
-
-              <!-- Ajoutez d'autres éléments texte ici -->
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">af1</h2>
-                <p th:text="${pwa.af1}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">af2</h2>
-                <p th:text="${pwa.af2}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">bf1</h2>
-                <p th:text="${pwa.bf1}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">bf2</h2>
-                <p th:text="${pwa.bf2}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">cf1</h2>
-                <p th:text="${pwa.cf1}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">cf2</h2>
-                <p th:text="${pwa.cf2}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">as1</h2>
-                <p th:text="${pwa.as1}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">as2</h2>
-                <p th:text="${pwa.as2}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">bs1</h2>
-                <p th:text="${pwa.bs1}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">bs2</h2>
-                <p th:text="${pwa.bs2}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">cs1</h2>
-                <p th:text="${pwa.cs1}" class="text-sm"></p>
-              </div>
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">cs2</h2>
-                <p th:text="${pwa.cs2}" class="text-sm"></p>
-              </div>
-
-              
-
-              <div>
-                <h2 class="text-lg font-semibold text-gray-700">Note</h2>
-                <p th:text="${pwa.note}" class="text-sm"></p>
-              </div>
+              <p th:text="${pwa.angles}" class="text-sm"></p>
             </div>
 
             <!-- Image à droite -->
@@ -142,25 +75,16 @@
               th:src="'data:image/jpeg;base64,' + ${encodedPhotos[stat.index]}"
               alt="Snina Photo"
               style="max-height: 200px; width: auto; border-radius: 30%"
-              class="mr-10"
-            />
-
-            <img
-              th:if="${side != null && stat != null && side[stat.index] != null && side[stat.index] != ''}"
-              th:src="'data:image/jpeg;base64,' + ${side[stat.index]}"
-              alt="Snina Photo"
-              style="max-height: 200px; width: auto; border-radius: 30%"
             />
           </div>
-          <!-- Contenu textuel -->
 
           <!-- Input field and button -->
           <div class="mt-4 flex items-center justify-end">
             <!-- Added 'justify-end' class -->
             <input
-              type="text"
-              id="remarque"
-              th:placeholder="${pwa.remarque != null ? pwa.remarque : 'Entrez une remarque'}"
+              type="number"
+              id="note"
+              th:placeholder="${pwa.note != 0 ? pwa.note : 'Entrez la note'}"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
             <button
@@ -234,20 +158,20 @@
 
     <script th:inline="javascript">
       function updateNote(student, pw) {
-        var Input = document.getElementById("remarque");
-        var remarque = Input.value.trim();
+        var noteInput = document.getElementById("note");
+        var note = noteInput.value.trim();
 
-        if (remarque != "") {
+        if (note !== "") {
           // Note is not empty, proceed with the update
           window.location.href =
             "http://localhost:8080/prof/student/pws/" +
-            remarque +
+            note +
             "/" +
             student +
             "/" +
             pw;
         } else {
-          alert("Please enter a valid remarque before updating.");
+          alert("Please enter a valid note before updating.");
         }
       }
 
@@ -260,7 +184,8 @@
         var modal = document.getElementById("chartModal");
         modal.style.display = "";
 
-        var labels = /*[[${tps}]]*/ [];
+        
+        var labels =/*[[${tps}]]*/ [];
         var notes = /*[[${notes}]]*/ [];
         const data = {
           labels: labels,

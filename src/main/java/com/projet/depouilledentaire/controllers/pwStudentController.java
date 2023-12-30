@@ -42,27 +42,30 @@ public class pwStudentController {
     model.addAttribute("student", studentRepository.getById(idStudent));
     List<StudentPW> pws = studentPWRepository.findByStudent(studentRepository.getById(idStudent));
     List<String> encodedPhotos = new ArrayList<>();
+    List<String> encodedSidePhotos = new ArrayList<>();
     List<String> titles = new ArrayList<>();
     List<Double> notes = new ArrayList<>();
     for (StudentPW pw : pws) {
       encodedPhotos.add(encodePhoto(pw.getImageFront()));
+      encodedSidePhotos.add(encodePhoto(pw.getImageSide()));
       titles.add(pw.getPw().getTitle());
       notes.add(pw.getNote());
     }
     model.addAttribute("pws", pws);
     model.addAttribute("encodedPhotos", encodedPhotos);
+    model.addAttribute("side", encodedSidePhotos);
     model.addAttribute("tps", titles);
     model.addAttribute("notes", notes);
     return "pwStudent";
   }
 
-  @GetMapping("/prof/student/pws/{note}/{idStudent}/{idPw}")
+  @GetMapping("/prof/student/pws/{remarque}/{idStudent}/{idPw}")
   public String validatenote(Model model, Principal principal, @PathVariable("idStudent") long idStudent,
       @PathVariable("idPw") long idPw,
-      @PathVariable("note") float note) {
+      @PathVariable("remarque") String remarque) {
         StudentPWKey sid = new StudentPWKey(idStudent, idPw);
         StudentPW pw = studentPWRepository.getById(sid);
-        pw.setNote(note);
+        pw.setRemarque(remarque);
         studentPWRepository.save(pw);
     return "redirect:/prof/student/pws/" +idStudent;
   }
