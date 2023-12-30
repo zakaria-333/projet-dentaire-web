@@ -4,3 +4,6 @@ https://drive.google.com/file/d/1z2kYPlF1PJrm2zGNiBjmsT66gXX8XanH/view
 [com.example-depouilledentaire-full-issues-breakdown.pdf](https://github.com/zakaria-333/projet-dentaire-web/files/13798793/com.example-depouilledentaire-full-issues-breakdown.pdf)
 # Lien DockerHub:
 https://hub.docker.com/r/zelharchi40498/projet-dentaire/tags
+# Compte admin:
+username:admin
+mot de passe:admin
